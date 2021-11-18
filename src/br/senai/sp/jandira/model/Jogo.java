@@ -3,7 +3,7 @@ package br.senai.sp.jandira.model;
 public class Jogo {
 	
 	private String titulo;
-	private Fabricante frabricante;
+	private String frabricante;
 	private boolean zerado;
 	private Plataforma plataforma;
 	private double valor;
@@ -17,11 +17,11 @@ public class Jogo {
 		this.titulo = titulo;
 	}
 
-	public Fabricante getFrabricante() {
+	public String getFrabricante() {
 		return frabricante;
 	}
 
-	public void setFrabricante(Fabricante frabricante) {
+	public void setFrabricante(String frabricante) {
 		this.frabricante = frabricante;
 	}
 
@@ -45,8 +45,9 @@ public class Jogo {
 		return valor;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setValor(String valor) {
+		double valorDouble =  Double.parseDouble(valor);
+		this.valor = valorDouble;
 	}
 
 	public String getObservacoes() {
