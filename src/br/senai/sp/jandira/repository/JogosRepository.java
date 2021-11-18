@@ -24,7 +24,7 @@ private Jogo[] colecao;
 		
 	}
 	
-	public Jogo listarAluno(int posicao) {
+	public Jogo listarJogo(int posicao) {
 		
 		return colecao[posicao];
 		
@@ -36,7 +36,7 @@ private Jogo[] colecao;
 		
 	}
 	
-	public int getTamanhoTurma() {
+	public int getTamanhoColecao() {
 		
 		return colecao.length;
 		

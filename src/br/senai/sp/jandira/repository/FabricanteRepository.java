@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.repository;
 
+import java.util.Arrays;
+
 import br.senai.sp.jandira.model.Fabricante;
 
 public class FabricanteRepository {
@@ -35,6 +37,14 @@ public class FabricanteRepository {
 	
 	public Fabricante getFabricante(int index) {
 		return fabricante[index];
+	}
+	
+	public int getIndex(Fabricante fabricante) {
+	
+		int getIndex = Arrays.asList(this.fabricante).indexOf(fabricante);
+		
+		return getIndex;
+		
 	}
 	
 

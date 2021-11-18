@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -24,6 +26,7 @@ import br.senai.sp.jandira.repository.JogosRepository;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class Frame extends JFrame {
 
@@ -31,6 +34,8 @@ public class Frame extends JFrame {
 	private JTextField txtJogo;
 	private JTextField txtValor;
 	private JTextField txtObservacoes;
+	
+	private int posicao;
 
 	public Frame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,10 +104,10 @@ public class Frame extends JFrame {
 		scrollPane.setBounds(397, 35, 177, 210);
 		contentPane.add(scrollPane);
 
-		JList list = new JList();
+		JList listJogos = new JList();
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		list.setModel(listModel);
-		scrollPane.setViewportView(list);
+		listJogos.setModel(listModel);
+		scrollPane.setViewportView(listJogos);
 
 		JLabel lblLista = new JLabel("Lista:");
 		lblLista.setBounds(397, 14, 46, 14);
@@ -142,7 +147,7 @@ public class Frame extends JFrame {
 				jogo.setFrabricante(
 						repositorioFabricante.getFabricante(
 								comboFabricante.getSelectedIndex()));
-				jogo.setZerado(rdbtnZerado.getVerifyInputWhenFocusTarget());
+				jogo.setZerado(rdbtnZerado.isSelected());
 				jogo.setObservacoes(txtObservacoes.getText());
 				jogo.setValor(txtValor.getText());
 				jogo.setPlataforma(plataformaSelecionada(comboPlataforma.getSelectedIndex()));
@@ -154,10 +159,16 @@ public class Frame extends JFrame {
 				System.out.println(jogo.getPlataforma());
 				System.out.println(jogo.getFrabricante().getNome());
 				
-				
-				colecao.gravar(jogo, 0);
+				colecao.gravar(jogo, posicao);
 				listModel.addElement(jogo.getTitulo());
 				//list.setSelectedIndex(0);
+				posicao++;
+				if (posicao == colecao.getTamanhoColecao()) {
+					
+					btnSalvar.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "A coelcao esta cheia!","Colecao cheia", JOptionPane.ERROR_MESSAGE);
+					
+				}
 			}
 		});
 		
@@ -166,10 +177,10 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				if (list.getSelectedIndex() <0) {
+				if (listJogos.getSelectedIndex() <0) {
 					
 				} else {
-					list.setSelectedIndex(list.getSelectedIndex()-1);
+					listJogos.setSelectedIndex(listJogos.getSelectedIndex()-1);
 				}
 				
 				
@@ -181,16 +192,32 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (list.getSelectedIndex() <0) {
+				if (listJogos.getSelectedIndex() <0) {
 					
 				} else {
-					list.setSelectedIndex(list.getSelectedIndex()+1);
+					listJogos.setSelectedIndex(listJogos.getSelectedIndex()+1);
 				}
 				
 			}
 		});
 		
-		
+		listJogos.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int i = listJogos.getSelectedIndex();
+				
+				Jogo jogo = colecao.listarJogo(i);
+				
+				txtJogo.setText(jogo.getTitulo());
+				txtObservacoes.setText(jogo.getObservacoes());
+				txtValor.setText(String.valueOf(jogo.getValor()));
+				comboFabricante.setSelectedIndex(repositorioFabricante.getIndex(jogo.getFrabricante()));
+				comboPlataforma.setSelectedIndex(jogo.getPlataforma().ordinal());
+				rdbtnZerado.setSelected(jogo.isZerado());
+				
+			}
+		});
 
 	}
 
