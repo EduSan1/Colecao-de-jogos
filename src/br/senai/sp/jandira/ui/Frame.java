@@ -15,8 +15,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
+import br.senai.sp.jandira.model.Fabricante;
 import br.senai.sp.jandira.model.Jogo;
 import br.senai.sp.jandira.model.Plataforma;
+import br.senai.sp.jandira.repository.FabricanteRepository;
 import br.senai.sp.jandira.repository.JogosRepository;
 
 import javax.swing.JButton;
@@ -27,7 +29,6 @@ public class Frame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtJogo;
-	private JTextField txtFabricante;
 	private JTextField txtValor;
 	private JTextField txtObservacoes;
 
@@ -47,11 +48,6 @@ public class Frame extends JFrame {
 		txtJogo.setBounds(46, 11, 167, 20);
 		contentPane.add(txtJogo);
 		txtJogo.setColumns(10);
-
-		txtFabricante = new JTextField();
-		txtFabricante.setColumns(10);
-		txtFabricante.setBounds(71, 39, 142, 20);
-		contentPane.add(txtFabricante);
 
 		JLabel lblFabricante = new JLabel("Fabricante:");
 		lblFabricante.setBounds(10, 42, 80, 14);
@@ -112,13 +108,27 @@ public class Frame extends JFrame {
 		lblLista.setBounds(397, 14, 46, 14);
 		contentPane.add(lblLista);
 
-		JButton btnEsquerda = new JButton("<");
-		btnEsquerda.setBounds(397, 266, 71, 41);
-		contentPane.add(btnEsquerda);
+		JButton btnCima = new JButton("<");
+		btnCima.setBounds(397, 266, 71, 41);
+		contentPane.add(btnCima);
 
-		JButton btnDireita = new JButton(">");
-		btnDireita.setBounds(503, 266, 71, 41);
-		contentPane.add(btnDireita);
+		JButton btnBaixo = new JButton(">");
+		btnBaixo.setBounds(503, 266, 71, 41);
+		contentPane.add(btnBaixo);
+		
+		JComboBox comboFabricante = new JComboBox();
+		comboFabricante.setBounds(72, 42, 141, 22);
+		DefaultComboBoxModel<String> modelFabricante = new DefaultComboBoxModel<String>();
+		
+		FabricanteRepository repositorioFabricante = new FabricanteRepository();
+
+		for (Fabricante fabricante : repositorioFabricante.getFabricante()) {
+
+			modelFabricante.addElement(fabricante.getNome());
+
+		}
+		comboFabricante.setModel(modelFabricante);
+		contentPane.add(comboFabricante);
 
 		JogosRepository colecao = new JogosRepository();
 		
@@ -129,7 +139,9 @@ public class Frame extends JFrame {
 
 				Jogo jogo = new Jogo();
 				jogo.setTitulo(txtJogo.getText());
-				jogo.setFrabricante(txtFabricante.getText());
+				jogo.setFrabricante(
+						repositorioFabricante.getFabricante(
+								comboFabricante.getSelectedIndex()));
 				jogo.setZerado(rdbtnZerado.getVerifyInputWhenFocusTarget());
 				jogo.setObservacoes(txtObservacoes.getText());
 				jogo.setValor(txtValor.getText());
@@ -140,12 +152,45 @@ public class Frame extends JFrame {
 				System.out.println(jogo.getTitulo());
 				System.out.println(jogo.getValor());
 				System.out.println(jogo.getPlataforma());
+				System.out.println(jogo.getFrabricante().getNome());
+				
 				
 				colecao.gravar(jogo, 0);
 				listModel.addElement(jogo.getTitulo());
+				//list.setSelectedIndex(0);
+			}
+		});
+		
+		btnCima.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				if (list.getSelectedIndex() <0) {
+					
+				} else {
+					list.setSelectedIndex(list.getSelectedIndex()-1);
+				}
+				
 				
 			}
 		});
+		
+		btnBaixo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (list.getSelectedIndex() <0) {
+					
+				} else {
+					list.setSelectedIndex(list.getSelectedIndex()+1);
+				}
+				
+			}
+		});
+		
+		
 
 	}
 
