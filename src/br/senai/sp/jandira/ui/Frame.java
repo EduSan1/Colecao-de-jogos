@@ -36,6 +36,7 @@ public class Frame extends JFrame {
 	private JTextField txtObservacoes;
 	
 	private int posicao;
+	private JTextField txtNumero;
 
 	public Frame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +75,10 @@ public class Frame extends JFrame {
 		JRadioButton rdbtnZerado = new JRadioButton("Zerado");
 		rdbtnZerado.setBounds(10, 67, 59, 23);
 		contentPane.add(rdbtnZerado);
-
+		
+		txtNumero = new JTextField();
+		txtNumero.setBounds(328, 11, 25, 20);
+		
 		JComboBox comboPlataforma = new JComboBox();
 		DefaultComboBoxModel<String> modelPlataforma = new DefaultComboBoxModel<String>();
 
@@ -134,6 +138,11 @@ public class Frame extends JFrame {
 		}
 		comboFabricante.setModel(modelFabricante);
 		contentPane.add(comboFabricante);
+		
+
+		
+		contentPane.add(txtNumero);
+		txtNumero.setColumns(10);
 
 		JogosRepository colecao = new JogosRepository();
 		
@@ -152,6 +161,8 @@ public class Frame extends JFrame {
 				jogo.setValor(txtValor.getText());
 				jogo.setPlataforma(plataformaSelecionada(comboPlataforma.getSelectedIndex()));
 
+//				posicao = Integer.parseInt(txtNumero.getText()) -1;
+				
 				System.out.println(jogo.getFrabricante());
 				System.out.println(jogo.getObservacoes());
 				System.out.println(jogo.getTitulo());
@@ -161,8 +172,9 @@ public class Frame extends JFrame {
 				
 				colecao.gravar(jogo, posicao);
 				listModel.addElement(jogo.getTitulo());
-				//list.setSelectedIndex(0);
 				posicao++;
+				//list.setSelectedIndex(0);
+				
 				if (posicao == colecao.getTamanhoColecao()) {
 					
 					btnSalvar.setEnabled(false);
@@ -181,6 +193,7 @@ public class Frame extends JFrame {
 					
 				} else {
 					listJogos.setSelectedIndex(listJogos.getSelectedIndex()-1);
+					
 				}
 				
 				
