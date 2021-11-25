@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.PlainDocument;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -19,6 +20,7 @@ import javax.swing.DefaultListModel;
 
 import br.senai.sp.jandira.model.Fabricante;
 import br.senai.sp.jandira.model.Jogo;
+import br.senai.sp.jandira.model.Numeros;
 import br.senai.sp.jandira.model.Plataforma;
 import br.senai.sp.jandira.repository.FabricanteRepository;
 import br.senai.sp.jandira.repository.JogosRepository;
@@ -63,8 +65,10 @@ public class Frame extends JFrame {
 		lblConsole.setBounds(10, 111, 46, 14);
 		contentPane.add(lblConsole);
 
+		
 		txtValor = new JTextField();
 		txtValor.setColumns(10);
+		txtValor.setDocument(new Numeros());
 		txtValor.setBounds(88, 139, 125, 20);
 		contentPane.add(txtValor);
 
