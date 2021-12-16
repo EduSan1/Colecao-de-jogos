@@ -29,20 +29,20 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 
 public class Frame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtJogo;
 	private JTextField txtValor;
-	private JTextField txtObservacoes;
 	
 	private int posicao;
-	private JTextField txtNumero;
 
 	public Frame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 375);
+		setBounds(100, 100, 450, 375);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,7 +64,7 @@ public class Frame extends JFrame {
 		JLabel lblConsole = new JLabel("Console:");
 		lblConsole.setBounds(10, 111, 46, 14);
 		contentPane.add(lblConsole);
-
+		
 		
 		txtValor = new JTextField();
 		txtValor.setColumns(10);
@@ -80,9 +80,6 @@ public class Frame extends JFrame {
 		rdbtnZerado.setBounds(10, 67, 59, 23);
 		contentPane.add(rdbtnZerado);
 		
-		txtNumero = new JTextField();
-		txtNumero.setBounds(328, 11, 25, 20);
-		
 		JComboBox comboPlataforma = new JComboBox();
 		DefaultComboBoxModel<String> modelPlataforma = new DefaultComboBoxModel<String>();
 
@@ -95,11 +92,6 @@ public class Frame extends JFrame {
 		comboPlataforma.setBounds(60, 107, 153, 22);
 		contentPane.add(comboPlataforma);
 
-		txtObservacoes = new JTextField();
-		txtObservacoes.setColumns(10);
-		txtObservacoes.setBounds(98, 170, 115, 75);
-		contentPane.add(txtObservacoes);
-
 		JLabel lblobservacoes = new JLabel("Observa\u00E7\u00F5es:");
 		lblobservacoes.setBounds(10, 173, 80, 14);
 		contentPane.add(lblobservacoes);
@@ -109,7 +101,7 @@ public class Frame extends JFrame {
 		contentPane.add(btnSalvar);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(397, 35, 177, 210);
+		scrollPane.setBounds(250, 35, 177, 210);
 		contentPane.add(scrollPane);
 
 		JList listJogos = new JList();
@@ -118,15 +110,15 @@ public class Frame extends JFrame {
 		scrollPane.setViewportView(listJogos);
 
 		JLabel lblLista = new JLabel("Lista:");
-		lblLista.setBounds(397, 14, 46, 14);
+		lblLista.setBounds(250, 14, 46, 14);
 		contentPane.add(lblLista);
 
 		JButton btnCima = new JButton("<");
-		btnCima.setBounds(397, 266, 71, 41);
+		btnCima.setBounds(250, 256, 71, 51);
 		contentPane.add(btnCima);
 
 		JButton btnBaixo = new JButton(">");
-		btnBaixo.setBounds(503, 266, 71, 41);
+		btnBaixo.setBounds(356, 256, 71, 46);
 		contentPane.add(btnBaixo);
 		
 		JComboBox comboFabricante = new JComboBox();
@@ -143,10 +135,14 @@ public class Frame extends JFrame {
 		comboFabricante.setModel(modelFabricante);
 		contentPane.add(comboFabricante);
 		
-
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(88, 173, 125, 71);
+		contentPane.add(scrollPane_1);
 		
-		contentPane.add(txtNumero);
-		txtNumero.setColumns(10);
+		JEditorPane txtObservacoes = new JEditorPane();
+		scrollPane_1.setViewportView(txtObservacoes);
+		
+
 
 		JogosRepository colecao = new JogosRepository();
 		
